@@ -7,6 +7,4 @@
 export const appConfig = {
     /** Frontend application URL loaded from the APP_URL env variable */
     appUrl: process.env.APP_URL!,
-    /** Backend API URL loaded from the API_URL env variable */
-    apiUrl: process.env.API_URL!,
 };

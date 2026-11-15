@@ -1,18 +1,10 @@
 name: Playwright Tests
 
-# The example suite runs against the public demo application
-# (practicesoftwaretesting.com) — the values below are public documentation,
-# not secrets. When you adapt this scaffold to your own application, move
-# real credentials into repository secrets: ${{ secrets.APP_PASSWORD }} etc.
-#
-# CI runs the API tests only (--grep @api --no-deps): the demo site's UI sits
-# behind Cloudflare bot protection, which challenges datacenter IPs like
-# GitHub's runners. The full suite (UI included) runs green locally — swap the
-# grep out when you point this scaffold at your own application.
-#
-# Not a required branch check: the suite depends on a third-party demo API,
-# and its downtime should not block merges (skill-lint and the template
-# smoke test are the deterministic gates).
+# Runs the Sauce Demo UI suite in Chromium, Firefox and WebKit on every push to main and every
+# pull request. The login comes from repository secrets (Settings → Secrets
+# and variables → Actions): APP_EMAIL (the Sauce Demo username) and
+# APP_PASSWORD. Sauce Demo publishes its demo credentials on its login page,
+# but they are still kept out of the code, as the project rules require.
 
 on:
     push:
@@ -24,10 +16,9 @@ jobs:
         runs-on: ubuntu-latest
         timeout-minutes: 30
         env:
-            APP_URL: https://practicesoftwaretesting.com
-            API_URL: https://api.practicesoftwaretesting.com
-            APP_EMAIL: customer@practicesoftwaretesting.com
-            APP_PASSWORD: welcome01
+            APP_URL: https://www.saucedemo.com
+            APP_EMAIL: ${{ secrets.APP_EMAIL }}
+            APP_PASSWORD: ${{ secrets.APP_PASSWORD }}
         steps:
             - uses: actions/checkout@v7
 
@@ -44,16 +35,15 @@ jobs:
                   mkdir -p env
                   {
                     echo "APP_URL=$APP_URL"
-                    echo "API_URL=$API_URL"
                     echo "APP_EMAIL=$APP_EMAIL"
                     echo "APP_PASSWORD=$APP_PASSWORD"
                   } > env/.env.dev
 
-            - name: Install Playwright browser
-              run: npx playwright install --with-deps chromium
+            - name: Install Playwright browsers
+              run: npx playwright install --with-deps chromium firefox webkit
 
-            - name: Run Playwright tests (API — see header comment)
-              run: npx playwright test --project=api
+            - name: Run Playwright tests
+              run: npx playwright test --project=chromium --project=firefox --project=webkit --grep-invert @destructive
 
             - uses: actions/upload-artifact@v7
               if: failure()

@@ -32,4 +32,4 @@ description: Use when adding an environment variable, a config property, an envi
 
 ## References
 
-- None. The live instances are `env/.env.example`, `config/app.ts` (`appConfig`), `config/util/util.ts` (`utilityConfig`) and the `dotenv` block at the top of `playwright.config.ts`.
+- None. The live instances are `env/.env.example`, `config/app.ts` (`appConfig`) and the `dotenv` block at the top of `playwright.config.ts`.
