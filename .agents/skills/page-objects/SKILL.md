@@ -26,7 +26,7 @@ description: Use when creating a page object or component under pages/**, adding
 - A page object for a form or CRUD screen has three groups: interactive locators, feedback locators (success, error, field validation), action methods. Feedback locators are not optional; `selectors` lists what to capture.
 - Strings inside `getByText(...)` come from `enums/{area}/*` (`Messages.LOGIN_ERROR`), never literals.
 - Action methods do not assert; a verification method named `xxxAndVerify()` may call `expect`. Waits are `page.waitForResponse(...)` or web-first assertions, never `page.waitForTimeout(...)`.
-- A fragment shared by several pages (header, modal, sidebar) is a component in `pages/components/`, held as `readonly nav: NavigationComponent` and created in the constructor.
+- A fragment shared by several pages (header, modal, sidebar) is a component in `pages/components/`, held as `readonly header: HeaderComponent` and created in the constructor.
 - Every new page object is registered in `fixtures/pom/page-object-fixture.ts`; tests receive it from the fixture (`fixtures`).
 
 ## Procedure
@@ -36,7 +36,7 @@ description: Use when creating a page object or component under pages/**, adding
 3. A message or route that has no enum member yet is added per `enums` before the class is written.
 4. Write the class from `references/class-pattern.md`: locators in priority order (`selectors`), feedback locators, action methods with explicit return types and JSDoc.
 5. A fragment used by more than one page becomes a component per `references/components.md`.
-6. Register: import the class, add it to `FrameworkFixtures`, add the fixture body, each shaped like the `appPage` entries in `fixtures/pom/page-object-fixture.ts`. No `mergeTests` change.
+6. Register: import the class, add it to `FrameworkFixtures`, add the fixture body, each shaped like the `loginPage` entries in `fixtures/pom/page-object-fixture.ts`. No `mergeTests` change.
 7. Run `npm run lint`; write or update the spec per `test-standards` and run it.
 
 ## References

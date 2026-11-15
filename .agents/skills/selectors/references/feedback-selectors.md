@@ -11,7 +11,7 @@ A page object that submits a form or runs a CRUD action carries a locator for ea
 | Loading state         | During an async operation                   | `getByRole('progressbar')` or `getByText(Messages.LOADING)`                    |
 | Empty state           | A list or table with no rows                | `getByText(Messages.NO_ITEMS)` or the empty-state heading                      |
 
-The `Messages.*` names are illustrative; each real member is added to `enums/{area}/*` with the text captured in exploration. The live instance is `AppPage` in `pages/app/app.page.ts` (`errorMessage`, `emailRequiredError`, `passwordRequiredError`, `emailFormatError`), with the success signal being the visible `username`.
+The `Messages.*` names are illustrative; each real member is added to `enums/{area}/*` with the text captured in exploration. The live instances are `LoginPage.errorMessage` and `CheckoutInformationPage.errorMessage` (both `getByRole('alert')`, asserted with `toHaveText(Messages.*)`), with the success signal being the URL of the next page.
 
 A test asserts the outcome through the locator:
 

@@ -17,7 +17,7 @@ Every endpoint × method gets a test for every status code the contract document
 | Query parameters, when documented    | 400/422 or 200 | invalid type and out-of-range value per parameter                                 |
 | No content (DELETE)                  | 204            | `status`; `expect(body).toBeNull()`                                               |
 
-Error schemas live in `fixtures/api/schemas/util/errorResponseSchema.ts`: `UnauthorizedResponseSchema` (401, `{ error }`), `ForbiddenResponseSchema` (403, `{ message }`), `NotFoundResponseSchema` (404, `{ message }`), `UnprocessableEntityResponseSchema` (422, field name → messages). When the contract documents no body for a code, assert `expect(body).toBeNull()` instead of a parse. A new documented error shape is added there as a shared schema, never as a per-endpoint type.
+Error schemas live in `fixtures/api/schemas/util/errorResponseSchema.ts` (created with the first API area; the current app, Swag Labs, has no API), one shared schema per status: e.g. `UnauthorizedResponseSchema` (401), `ForbiddenResponseSchema` (403), `NotFoundResponseSchema` (404), `UnprocessableEntityResponseSchema` (422). When the contract documents no body for a code, assert `expect(body).toBeNull()` instead of a parse. A new documented error shape is added there as a shared schema, never as a per-endpoint type.
 
 ## Structure
 
@@ -27,6 +27,6 @@ Error schemas live in `fixtures/api/schemas/util/errorResponseSchema.ts`: `Unaut
 
 ## Tokens
 
-- `process.env.ACCESS_TOKEN` is the one token the scaffold mints: `tests/{area}/auth-api.setup.ts` calls `setUserAccessToken()` from `helpers/{area}/createStorageState.ts`, which saves it to `StorageStatePaths.API_ACCESS_TOKEN`; the `apiRequest` fixture file loads it once per worker (`helpers`). Pass it as `headers`; `authType` defaults to `Bearer`.
+- An authenticated API needs a minted token: add an API setup project that writes it to a `StorageStatePaths` file and a worker-scoped fixture that loads it into `process.env.ACCESS_TOKEN` (`helpers`, auth bootstrap). The current app has no API, so none exists yet. Pass the token as `headers`; `authType` defaults to `Bearer`.
 - The 401 row sends no `headers` at all.
 - The 403 row needs a second, lower-privileged token. Extend the auth helper to mint it from a second credential pair declared in `env/.env.example`, or `test.skip` + `// FIXME` the row until the credentials exist. Never read an env var no helper populates.

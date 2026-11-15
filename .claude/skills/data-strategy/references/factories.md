@@ -1,6 +1,6 @@
 # Factories
 
-Faker + Zod: unique, valid data per test run, so parallel workers never collide on a name, email or id. The live instance is `test-data/factories/app/user.factory.ts` (`generateUser`, `generateLoginCredentials`); `ProductSchema` and `generateProduct` below are illustrative.
+Faker + Zod: unique, valid data per test run, so parallel workers never collide on a name, email or id. The live instances are `test-data/factories/app/checkout.factory.ts` (`generateCheckoutInfo`) and `test-data/factories/app/user.factory.ts` (`generateLoginCredentials`); `ProductSchema` and `generateProduct` below are illustrative.
 
 ## Pattern
 

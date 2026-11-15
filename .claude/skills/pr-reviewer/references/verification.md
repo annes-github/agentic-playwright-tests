@@ -22,7 +22,7 @@ Project names are repo-specific; read them before running anything:
 grep -nE "name:\s*['\"]" playwright.config.ts
 ```
 
-This scaffold defines `setup-api`, `setup-ui`, `api` and `chromium`: API specs run under `api` (depends on `setup-api`), UI specs under `chromium` (depends on both setup projects). Run each changed spec by path:
+This scaffold defines `setup-ui`, `api` and `chromium`: API specs run under `api` (none exist yet; the app under test has no API), UI specs under `chromium` (depends on `setup-ui`). Run each changed spec by path:
 
 ```bash
 npx playwright test <changed spec> --project <name>
@@ -32,7 +32,7 @@ No matching project: run without `--project` and say so in the report.
 
 ## Env limit
 
-Specs read `APP_URL`, `API_URL`, `APP_EMAIL` and `APP_PASSWORD` (declared in `env/.env.example`) and the token the `setup-api` project mints. Without them the run dies at setup. That is an environment limitation, not a branch defect: report it verbatim as "could not run — missing env vars (`<var>`); run manually before merge" and move on. Never invent, hardcode or stub a credential to force a green run.
+Specs read `APP_URL`, `APP_EMAIL` and `APP_PASSWORD` (declared in `env/.env.example`). Without them the run dies at setup. That is an environment limitation, not a branch defect: report it verbatim as "could not run — missing env vars (`<var>`); run manually before merge" and move on. Never invent, hardcode or stub a credential to force a green run.
 
 ## Large diffs
 

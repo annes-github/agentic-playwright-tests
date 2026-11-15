@@ -1,6 +1,6 @@
 # Components
 
-A component is a class for a UI fragment that appears on more than one page: header, navigation, modal, toast, sidebar. Same shape as a page object (`get` locators, JSDoc on actions only), stored in `pages/components/<name>.component.ts`. The live instance is `pages/components/navigation.component.ts`.
+A component is a class for a UI fragment that appears on more than one page: header, navigation, modal, toast, sidebar. Same shape as a page object (`get` locators, JSDoc on actions only), stored in `pages/components/<name>.component.ts`. The live instances are `pages/components/header.component.ts` and `pages/components/product-list.component.ts`, composed into `InventoryPage` and `CartPage`.
 
 ```typescript
 import { Locator, Page } from '@playwright/test';

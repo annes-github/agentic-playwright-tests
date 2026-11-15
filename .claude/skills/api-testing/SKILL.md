@@ -36,7 +36,7 @@ description: Use when writing or updating an API spec under tests/**/api/**, pla
 ## Procedure
 
 1. Locate the contract: a spec file in the repo, the API host's documentation route, or a document from the human. Nothing found: ask. Partial or absent: `references/contract-sourcing.md`.
-2. Write the response schema in `fixtures/api/schemas/{area}/` per `type-safety` (`ls fixtures/api/schemas/` resolves `{area}`); error bodies use `fixtures/api/schemas/util/errorResponseSchema.ts`.
+2. Write the response schema in `fixtures/api/schemas/{area}/` per `type-safety` (`ls fixtures/api/schemas/` resolves `{area}`); shared error bodies go in `fixtures/api/schemas/util/errorResponseSchema.ts` (create it with the first API area; none exists yet).
 3. Add a new path to `ApiEndpoints` per `enums`.
 4. Write the happy path: `apiRequest<SchemaType>({ method, url: ApiEndpoints.X, baseUrl: process.env.API_URL, headers: process.env.ACCESS_TOKEN, body })` in a `test.describe` per method + path, tag `@api`, payload from a factory per `data-strategy`.
 5. List every status code the contract documents plus the baseline rows in `references/coverage-matrix.md`; present the plan before writing those tests.

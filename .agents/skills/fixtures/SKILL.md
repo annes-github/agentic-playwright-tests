@@ -7,7 +7,7 @@ description: Use when registering a page object as a fixture, adding a setup/tea
 
 ## Critical
 
-- Tests receive page objects and API access through fixtures. `new AppPage(page)` inside a spec is forbidden.
+- Tests receive page objects and API access through fixtures. `new LoginPage(page)` inside a spec is forbidden.
 - Spec files import `test` and `expect` from `fixtures/pom/test-options.ts`, never from `@playwright/test`.
 - Page-object fixtures live in `fixtures/pom/page-object-fixture.ts`, lifecycle fixtures in `fixtures/helper/helper-fixture.ts`, functions without a lifecycle in `helpers/` (`helpers`). No per-page fixture files.
 - Every fixture is typed in `FrameworkFixtures` or `HelperFixtures`.
@@ -41,7 +41,7 @@ description: Use when registering a page object as a fixture, adding a setup/tea
 
     None of the rows fit → ask.
 
-2. Page object: add the property to `FrameworkFixtures` and the body `async ({ page }, use) => { await use(new X(page)); }`, shaped like `appPage` in the real file. No `mergeTests` change.
+2. Page object: add the property to `FrameworkFixtures` and the body `async ({ page }, use) => { await use(new X(page)); }`, shaped like `loginPage` in the real file. No `mergeTests` change.
 3. Lifecycle fixture: add the type to `HelperFixtures`; write setup → `use` → teardown per `references/lifecycle.md`, calling `apiRequest` from `fixtures/api/plain-function.ts` with data from a factory (`data-strategy`) and the body parsed with the endpoint's schema before `use`.
 4. New category: file skeleton and the `mergeTests()` line per `references/lifecycle.md`.
 5. Run `npx tsc --noEmit`, then the spec that consumes the fixture.

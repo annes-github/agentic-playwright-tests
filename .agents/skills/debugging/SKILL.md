@@ -30,7 +30,7 @@ description: Use when a Playwright test fails, flakes or times out, when `Schema
     | `ZodError` from `Schema.parse(body)`                          | response disagrees with the schema                              | documented contract → bug, `api-testing` protocol; undocumented → update the schema (`type-safety`)        |
     | `ECONNREFUSED`, `ENOTFOUND`, 5xx, or 401 on a protected route | wrong `API_URL`, API down, token not loaded                     | `config`; `helpers` (auth bootstrap)                                                                       |
     | `ENOENT ... appStorageState.json`                             | the `setup-ui` project did not run or failed                    | `npx playwright test --project setup-ui`; check `env/.env.dev`                                             |
-    | `appPage is undefined`, `cannot read property of undefined`   | fixture not registered, `test` imported from `@playwright/test` | `fixtures`; `npm run lint`                                                                                 |
+    | `loginPage is undefined`, `cannot read property of undefined` | fixture not registered, `test` imported from `@playwright/test` | `fixtures`; `npm run lint`                                                                                 |
     | green alone, red in the suite                                 | shared state between tests, missing `resetStorageState`         | `test-standards` (independence)                                                                            |
 
 3. Reproduce: `npx playwright test <file> --workers=1 --retries=0`, `--grep "<title>"` to narrow further. Green locally, red in CI → `references/ci-replay.md`.

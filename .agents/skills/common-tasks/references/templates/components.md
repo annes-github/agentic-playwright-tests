@@ -10,5 +10,5 @@ Create a component object for [COMPONENT NAME] (header, modal, sidebar):
 - elements: [list]
 - actions: [list]
 
-Composable into page objects; pattern file pages/components/navigation.component.ts. Follow the page-objects and selectors skills.
+Composable into page objects; pattern file pages/components/header.component.ts. Follow the page-objects and selectors skills.
 ```

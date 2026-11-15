@@ -1,6 +1,6 @@
 # Zod usage
 
-Zod 4 (`zod` 4.x, imported as `zod/v4`). The live schemas are `fixtures/api/schemas/app/userSchema.ts` and `fixtures/api/schemas/util/errorResponseSchema.ts`.
+Zod 4 (`zod` 4.x, imported as `zod/v4`). The live schemas are `fixtures/api/schemas/app/checkoutSchema.ts` and `fixtures/api/schemas/app/loginSchema.ts`.
 
 ## Validator per data type
 

@@ -19,7 +19,7 @@ Put the source (URL or file path, and the version or date the document states) i
 The spec exists but omits a body shape or a status code:
 
 - The documented parts stay contract-bound.
-- For the undocumented parts only, capture the live shape with one real request and mark the schema with `FIXME:` naming what the spec omits. `fixtures/api/schemas/util/errorResponseSchema.ts` is the live instance: the spec documents the error codes without bodies, so the 401 `{ error }`, 404 `{ message }` and 422 field-map shapes are captured.
+- For the undocumented parts only, capture the live shape with one real request and mark the schema with `FIXME:` naming what the spec omits. Typical case: a spec that documents error codes without bodies, so the 401, 404 and 422 shapes are captured live and flagged.
 - One missing error shape does not make the whole endpoint undocumented.
 
 ## No documentation at all

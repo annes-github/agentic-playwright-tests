@@ -12,7 +12,7 @@ description: Use when creating or editing a spec file under tests/**, choosing a
 
     ```typescript
     // CORRECT
-    test('should login', { tag: '@smoke' }, async ({ appPage }) => {});
+    test('should login', { tag: '@smoke' }, async ({ loginPage }) => {});
     // WRONG
     test('should login', { tag: ['@smoke', '@e2e'] }, async () => {});
     ```
@@ -23,7 +23,7 @@ description: Use when creating or editing a spec file under tests/**, choosing a
 
     ```typescript
     // CORRECT
-    await expect(appPage.username).toBeVisible();
+    await expect(checkoutCompletePage.confirmationHeading).toBeVisible();
     // WRONG
     await page.waitForTimeout(1000);
     ```

@@ -1,33 +1,35 @@
 # Spec patterns
 
-Paths assume `tests/{area}/<type>/`; run `ls tests/` for the real area. The live instances are `tests/app/functional/login.spec.ts`, `tests/app/e2e/e2e.spec.ts`, `tests/app/auth.setup.ts` and `tests/app/auth-api.setup.ts`. API specs follow `api-testing`.
+Paths assume `tests/{area}/<type>/`; run `ls tests/` for the real area. The live instances are `tests/app/functional/login.spec.ts`, `tests/app/functional/checkout-information.spec.ts` (data-driven), `tests/app/e2e/purchase.spec.ts` and `tests/app/auth.setup.ts`. API specs follow `api-testing`.
 
 ## Functional
 
 One behaviour per test. The `chromium` project starts signed in through the storage state; `resetStorageState()` clears cookies, permissions and the app's web storage so the test starts signed out (a login page, a form that pre-fills the user's data).
 
 ```typescript
+import { AppRoutes } from '../../../enums/app/app';
 import { expect, test } from '../../../fixtures/pom/test-options';
+import { appUrl } from '../../../helpers/app/url';
 
-test.describe('functional login', () => {
-    test.beforeEach(async ({ resetStorageState, appPage }) => {
+test.describe('login', () => {
+    test.beforeEach(async ({ resetStorageState, loginPage }) => {
         await resetStorageState();
-        await appPage.openLoginPage();
+        await loginPage.open();
     });
 
     test(
-        'should login successfully with valid credentials',
+        'should log in with valid credentials',
         { tag: '@smoke' },
-        async ({ appPage }) => {
-            await test.step('WHEN user enters valid credentials', async () => {
-                await appPage.login(
+        async ({ loginPage, page }) => {
+            await test.step('WHEN user submits valid credentials', async () => {
+                await loginPage.login(
                     process.env.APP_EMAIL!,
                     process.env.APP_PASSWORD!
                 );
             });
 
-            await test.step('THEN user sees the username', async () => {
-                await expect(appPage.username).toBeVisible();
+            await test.step('THEN user lands on the inventory page', async () => {
+                await expect(page).toHaveURL(appUrl(AppRoutes.INVENTORY));
             });
         }
     );
@@ -36,18 +38,27 @@ test.describe('functional login', () => {
 
 ## Data-driven
 
-The loop sits inside `describe` and outside `test()`, so each row is its own test. Rows come from a static `.ts` file (`data-strategy`). When rows carry an expected-error kind, map it to a locator in the spec, as `tests/app/functional/login.spec.ts` does.
+The loop sits inside `describe` and outside `test()`, so each row is its own test. Rows come from a static `.ts` file (`data-strategy`), or an inline array when only this spec needs them. Each row pairs an input with the `Messages` member it must produce, as `tests/app/functional/checkout-information.spec.ts` does.
 
 ```typescript
-import { INVALID_LOGIN_ATTEMPTS } from '../../../test-data/static/app/invalidCredentials';
+const REQUIRED_FIELDS: ReadonlyArray<{
+    field: keyof CheckoutInfo;
+    message: Messages;
+}> = [
+    { field: 'firstName', message: Messages.FIRST_NAME_REQUIRED },
+    { field: 'lastName', message: Messages.LAST_NAME_REQUIRED },
+];
 
-for (const { description, email, password } of INVALID_LOGIN_ATTEMPTS) {
+for (const { field, message } of REQUIRED_FIELDS) {
     test(
-        `should show error for invalid credentials - ${description}`,
+        `should show an error when ${field} is blank`,
         { tag: '@regression' },
-        async ({ appPage }) => {
-            await appPage.login(email, password);
-            await expect(appPage.errorMessage).toBeVisible();
+        async ({ checkoutInformationPage }) => {
+            const { [field]: _blank, ...info } = generateCheckoutInfo();
+            await checkoutInformationPage.submit(info);
+            await expect(checkoutInformationPage.errorMessage).toHaveText(
+                message
+            );
         }
     );
 }
@@ -55,30 +66,34 @@ for (const { description, email, password } of INVALID_LOGIN_ATTEMPTS) {
 
 ## E2E
 
-One test for the whole journey, chained with steps. The `chromium` project loads the storage state from setup, so the test starts signed in.
+One test for the whole journey, chained with steps. The `chromium` project loads the storage state from setup, so the test starts signed in. The live instance is `tests/app/e2e/purchase.spec.ts`.
 
 ```typescript
 import { expect, test } from '../../../fixtures/pom/test-options';
 
-test.describe('e2e checkout', () => {
-    test.beforeEach(async ({ appPage }) => {
-        await appPage.openHomePage();
+test.describe('e2e purchase', () => {
+    test.beforeEach(async ({ inventoryPage }) => {
+        await inventoryPage.open();
     });
 
     test(
-        'should add a product and complete checkout',
+        'should buy a product through to confirmation',
         { tag: '@e2e' },
-        async ({ appPage }) => {
-            await test.step('GIVEN user is signed in', async () => {
-                await expect(appPage.username).toBeVisible();
-            });
-
-            await test.step('WHEN user adds a product and pays', async () => {
+        async ({ inventoryPage, cartPage, checkoutCompletePage }) => {
+            await test.step('GIVEN user adds a product to the cart', async () => {
                 // chain page-object actions here
             });
 
+            await test.step('WHEN user checks out', async () => {
+                await inventoryPage.header.openCart();
+                await cartPage.checkout();
+                // fill details, finish
+            });
+
             await test.step('THEN the order confirmation is shown', async () => {
-                // final assertion on the journey outcome
+                await expect(
+                    checkoutCompletePage.confirmationHeading
+                ).toBeVisible();
             });
         }
     );
@@ -87,7 +102,7 @@ test.describe('e2e checkout', () => {
 
 ## Setup
 
-`tests/{area}/*.setup.ts` runs in the `setup` project before `chromium` (`playwright.config.ts`). No tag. It mints the API token and the storage state through the helpers in `helpers/{area}/`:
+`tests/{area}/*.setup.ts` runs in the `setup-ui` project before `chromium` (`playwright.config.ts`). No tag. It writes the browser storage state through the helpers in `helpers/{area}/`:
 
 ```typescript
 import * as fs from 'node:fs';

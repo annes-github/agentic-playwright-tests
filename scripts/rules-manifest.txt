@@ -7,7 +7,7 @@
 # Critical block and the grep would still hit something else. A stylistic
 # rewrite of a Critical block should force a deliberate manifest update.
 fixtures/pom/test-options.ts|fixtures|Single import point for test/expect
-new AppPage(page)|fixtures|No manual page-object instantiation
+new LoginPage(page)|fixtures|No manual page-object instantiation
 getByRole|selectors|Selector priority order
 XPath|selectors|No XPath
 `playwright-cli` is mandatory|selectors|Explore Before Generate (UI)

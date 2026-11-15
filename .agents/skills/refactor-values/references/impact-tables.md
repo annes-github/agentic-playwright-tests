@@ -49,6 +49,6 @@ Messages.LOGIN_ERROR; // file B: Property 'LOGIN_ERROR' does not exist
 Static value changed, an assertion not updated:
 
 ```ts
-password: ('UpdatedWrongPassword!', // test-data/static/app/invalidCredentials.ts
+password: ('UpdatedWrongPassword!', // test-data/static/{area}/<set>.ts
     expect(response.password).toBe('WrongPassword123!')); // stale
 ```

@@ -7,7 +7,7 @@ Prompt templates for Zod response schemas. `api-testing` owns contract sourcing,
 ```
 Create a Zod schema for the [STATUS] response of [ENDPOINT] from the OpenAPI document at [LOCATION].
 
-Location fixtures/api/schemas/{area}/[name]Schema.ts (run `ls fixtures/api/schemas/` first); pattern file fixtures/api/schemas/app/userSchema.ts. Mirror the documented contract exactly (field types, required and optional, nullability, nested shapes, the envelope) per the type-safety skill; export the schema and its inferred type. A runtime response that disagrees is a bug to report, never a reason to loosen the schema (api-testing skill).
+Location fixtures/api/schemas/{area}/[name]Schema.ts (run `ls fixtures/api/schemas/` first); pattern file fixtures/api/schemas/app/checkoutSchema.ts. Mirror the documented contract exactly (field types, required and optional, nullability, nested shapes, the envelope) per the type-safety skill; export the schema and its inferred type. A runtime response that disagrees is a bug to report, never a reason to loosen the schema (api-testing skill).
 ```
 
 ## Create a schema without documentation (fallback)

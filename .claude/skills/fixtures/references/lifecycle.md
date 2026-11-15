@@ -1,6 +1,6 @@
 # Fixture lifecycle
 
-The live instances are `fixtures/pom/page-object-fixture.ts` (page objects, `resetStorageState`), `fixtures/api/api-request-fixture.ts` (`apiRequest`, the worker-scoped auto fixture `accessTokenLoaded`) and `fixtures/helper/helper-fixture.ts` (`createdResource`, an example to replace).
+The live instances are `fixtures/pom/page-object-fixture.ts` (page objects, `resetStorageState`), `fixtures/api/api-request-fixture.ts` (`apiRequest`) and `fixtures/helper/helper-fixture.ts` (empty `HelperFixtures`, ready for the first lifecycle fixture).
 
 ## Helper fixture skeleton
 
@@ -68,7 +68,7 @@ Then in `fixtures/pom/test-options.ts`: `mergeTests(pageObjectFixture, apiReques
 
 | Symptom                                                      | Cause                                                        | Fix                                        |
 | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------ |
-| `appPage` (or any fixture) missing on the test context       | spec imports `test` from `@playwright/test`                  | import from `fixtures/pom/test-options.ts` |
+| `loginPage` (or any fixture) missing on the test context     | spec imports `test` from `@playwright/test`                  | import from `fixtures/pom/test-options.ts` |
 | Fixture implemented but TypeScript rejects it on the context | property not added to `FrameworkFixtures` / `HelperFixtures` | add it to the type literal                 |
 | Teardown never runs                                          | code sits before `await use(...)`, or `use` is missing       | setup → `await use(data)` → teardown       |
 | New category not injected                                    | not merged into `test-options.ts`                            | append it to `mergeTests(...)`             |

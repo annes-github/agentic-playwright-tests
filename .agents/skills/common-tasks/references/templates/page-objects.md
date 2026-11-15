@@ -25,7 +25,7 @@ Create a page object for [PAGE NAME] from the attached playwright-cli snapshot:
 - elements: [list]
 - actions: [list]
 
-Location pages/{area}/[name].page.ts (run `ls pages/` first); pattern file pages/app/app.page.ts. Register it in fixtures/pom/page-object-fixture.ts. Follow the page-objects and selectors skills.
+Location pages/{area}/[name].page.ts (run `ls pages/` first); pattern file pages/app/checkout-information.page.ts (a form with feedback locators). Register it in fixtures/pom/page-object-fixture.ts. Follow the page-objects and selectors skills.
 ```
 
 ## Add locators to an existing page object

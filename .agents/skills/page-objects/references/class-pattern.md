@@ -1,6 +1,6 @@
 # Class pattern
 
-The live instance is `pages/app/app.page.ts` (`AppPage`). Section comments mark the groups; locators use the priority order from `selectors`.
+The live instances are `pages/app/login.page.ts` (`LoginPage`) and `pages/app/checkout-information.page.ts` (`CheckoutInformationPage`). Section comments mark the groups; locators use the priority order from `selectors`.
 
 ```typescript
 import { expect, Locator, Page } from '@playwright/test';

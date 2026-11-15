@@ -8,7 +8,7 @@ Static files hold curated sets that a `for...of` loop iterates (`test-standards`
 
 ## Tier 2: domain-specific sets in `test-data/static/{area}/`
 
-A new file for a curated set tied to the app's validation rules (malformed emails, weak passwords, forbidden categories). The live instance is `test-data/static/app/invalidCredentials.ts`; it carries both shapes.
+A new file for a curated set tied to the app's validation rules (malformed emails, weak passwords, forbidden categories). No Tier 2 file exists yet; the shapes below are illustrative. (`test-data/static/app/products.ts` is app-defined expected content, the catalogue the inventory specs assert against, not a validation set.)
 
 Shape A, one array per field, for a loop that targets one field at a time:
 

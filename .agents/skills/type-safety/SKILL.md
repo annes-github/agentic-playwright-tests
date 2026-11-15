@@ -35,7 +35,7 @@ description: Use when creating or extending a Zod schema under fixtures/api/sche
 
 ## Procedure
 
-1. `ls fixtures/api/schemas/` resolves `{area}`; the file is `fixtures/api/schemas/{area}/<name>Schema.ts`; shared error bodies stay in `fixtures/api/schemas/util/errorResponseSchema.ts`.
+1. `ls fixtures/api/schemas/` resolves `{area}`; the file is `fixtures/api/schemas/{area}/<name>Schema.ts`; shared error bodies go in `fixtures/api/schemas/util/errorResponseSchema.ts` (created with the first API area).
 2. Write the schema from the contract that `api-testing` step 1 sourced, one validator per field from `references/zod-usage.md`, the contract source in a comment at the top.
 3. Export the type; `references/zod-usage.md` decides `zInput` versus `zOutput` and when to extract an envelope.
 4. Hand it to the consumer: a spec asserts `expect(SchemaName.parse(body)).toBeTruthy();` (`api-testing`); a factory returns `Schema.parse(merged)` (`data-strategy`); fixture code binds `const x = Schema.parse(body);`.
