@@ -6,7 +6,7 @@ The project is built on the [`create-agentic-playwright`](docs/SCAFFOLD.md) scaf
 
 ## Background
 
-This suite started as a hand-written Playwright project: [annes-github/playwright-tests](https://github.com/annes-github/playwright-tests). I then ported it into this agentic testing framework, where an AI coding agent works under a written rulebook and project-specific skills. The agent explored the live app, proposed a plan for my approval, and rebuilt the suite to the framework's standards, while I made the decisions along the way, such as which tests to keep and which parts of the scaffold to remove. Comparing the two repositories shows the same test design, before and after.
+This suite started as a hand-written Playwright project: [annes-github/playwright-tests](https://github.com/annes-github/playwright-tests). I then ported it into this agentic testing framework, where an AI coding agent works under a written rulebook and project-specific skills. The agent explored the live app, proposed a plan for my approval, and rebuilt the suite to the framework's standards, while I made the decisions along the way, such as running the suite in Chromium, Firefox and WebKit and removing the parts of the scaffold this app didn't need. Comparing the two repositories shows the same test design, before and after.
 
 ## What's covered
 
