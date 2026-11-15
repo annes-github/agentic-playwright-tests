@@ -73,13 +73,6 @@ export default defineConfig({
 
     /* Configure projects */
     projects: [
-        /* API auth setup - mints the access token over HTTP, no browser.
-           Its own project so the `api` project never depends on a UI login. */
-        {
-            name: 'setup-api',
-            testMatch: /[\\/]auth-api\.setup\.ts$/,
-        },
-
         /* UI auth setup - signs in through the browser and saves the storage state */
         {
             name: 'setup-ui',
@@ -91,12 +84,10 @@ export default defineConfig({
         },
 
         /* API test project - request-context only, no browser storage state.
-           Depends on setup-api alone: the token file exists before any worker
-           starts, and an API run never launches a browser (CI, fresh environments). */
+           The app under test (Swag Labs) has no API, so no spec matches yet. */
         {
             name: 'api',
             testMatch: /.*\/api\/.*\.spec\.ts/,
-            dependencies: ['setup-api'],
         },
 
         /* Main UI test project - Chrome */
@@ -108,7 +99,7 @@ export default defineConfig({
                 storageState: StorageStatePaths.APP,
                 viewport: { width: 1920, height: 1080 },
             },
-            dependencies: ['setup-api', 'setup-ui'],
+            dependencies: ['setup-ui'],
         },
 
         /* Firefox - commented out by default */
@@ -118,7 +109,7 @@ export default defineConfig({
         //         ...devices['Desktop Firefox'],
         //         storageState: '.auth/app/appStorageState.json',
         //     },
-        //     dependencies: ['setup-api', 'setup-ui'],
+        //     dependencies: ['setup-ui'],
         // },
 
         /* WebKit - commented out by default */
@@ -128,7 +119,7 @@ export default defineConfig({
         //         ...devices['Desktop Safari'],
         //         storageState: '.auth/app/appStorageState.json',
         //     },
-        //     dependencies: ['setup-api', 'setup-ui'],
+        //     dependencies: ['setup-ui'],
         // },
     ],
 });

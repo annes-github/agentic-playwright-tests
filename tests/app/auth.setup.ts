@@ -2,9 +2,9 @@
  * auth.setup.ts
  * Playwright setup script for the browser storage state (`setup-ui` project).
  *
- * Signs in through the page object once per run and saves cookies and web
+ * Signs in through the login page once per run and saves cookies and web
  * storage to `StorageStatePaths.APP`; the `chromium` project loads that file,
- * so UI tests start signed in. The API access token is `auth-api.setup.ts`.
+ * so UI tests start signed in.
  */
 
 import * as fs from 'node:fs';

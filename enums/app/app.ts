@@ -1,41 +1,61 @@
 /**
- * Application-specific constants.
- * Add your application's repeated string values here.
+ * Application-specific constants for the Swag Labs (SauceDemo) storefront.
  *
  * @example
  * ```ts
- * import { Messages, ApiEndpoints } from '../../enums/app/app';
+ * import { Messages, AppRoutes } from '../../enums/app/app';
  *
- * await expect(page.getByText(Messages.LOGIN_ERROR)).toBeVisible();
+ * await expect(loginPage.errorMessage).toHaveText(Messages.LOGIN_INVALID_CREDENTIALS);
  * ```
  */
 
-/** Common UI messages — every value verified against the live demo app */
+/** UI messages and labels — every value verified against the live app */
 export enum Messages {
-    LOGIN_ERROR = 'Invalid email or password',
-    EMAIL_REQUIRED = 'Email is required',
-    PASSWORD_REQUIRED = 'Password is required',
-    EMAIL_FORMAT_INVALID = 'Email format is invalid',
+    LOGIN_INVALID_CREDENTIALS = 'Epic sadface: Username and password do not match any user in this service',
+    FIRST_NAME_REQUIRED = 'Error: First Name is required',
+    LAST_NAME_REQUIRED = 'Error: Last Name is required',
+    POSTAL_CODE_REQUIRED = 'Error: Postal Code is required',
+    PAYMENT_INFORMATION_LABEL = 'Payment Information:',
+    SHIPPING_INFORMATION_LABEL = 'Shipping Information:',
+    PRICE_TOTAL_LABEL = 'Price Total',
+    PAYMENT_CARD = 'SauceCard #31337',
+    SHIPPING_METHOD = 'Free Pony Express Delivery!',
+    ITEM_TOTAL_PREFIX = 'Item total: ',
+    TAX_PREFIX = 'Tax: ',
+    TOTAL_PREFIX = 'Total: ',
+    ORDER_COMPLETE = 'Thank you for your order!',
 }
 
-/** UI route paths */
+/** UI route paths, relative to APP_URL */
 export enum AppRoutes {
-    LOGIN = '/auth/login',
+    LOGIN = '/',
+    INVENTORY = '/inventory.html',
+    CART = '/cart.html',
+    CHECKOUT_STEP_ONE = '/checkout-step-one.html',
+    CHECKOUT_STEP_TWO = '/checkout-step-two.html',
+    CHECKOUT_COMPLETE = '/checkout-complete.html',
 }
 
-/** API endpoint paths */
-export enum ApiEndpoints {
-    LOGIN = '/users/login',
-    LOGOUT = '/users/logout',
-    CURRENT_USER = '/users/me',
-    REGISTER = '/users/register',
+/** Option values of the "Sort products" combobox on the inventory page */
+export enum SortOptions {
+    NAME_ASC = 'az',
+    NAME_DESC = 'za',
+    PRICE_ASC = 'lohi',
+    PRICE_DESC = 'hilo',
 }
 
-/**
- * Auth state files written by the setup projects
- * (`tests/app/auth-api.setup.ts` and `tests/app/auth.setup.ts`).
- */
+/** Pricing rules applied by the checkout overview */
+export enum Pricing {
+    TAX_RATE = 0.08,
+    CURRENCY_DECIMALS = 2,
+}
+
+/** Cart line-item values rendered by the app */
+export enum LineItem {
+    DEFAULT_QUANTITY = '1',
+}
+
+/** Auth state file written by the setup project (`tests/app/auth.setup.ts`) */
 export enum StorageStatePaths {
     APP = '.auth/app/appStorageState.json',
-    API_ACCESS_TOKEN = '.auth/app/apiAccessToken.json',
 }

@@ -1,34 +1,59 @@
 import { test as base } from '@playwright/test';
-import { AppPage } from '../../pages/app/app.page';
+import { CartPage } from '../../pages/app/cart.page';
+import { CheckoutCompletePage } from '../../pages/app/checkout-complete.page';
+import { CheckoutInformationPage } from '../../pages/app/checkout-information.page';
+import { CheckoutOverviewPage } from '../../pages/app/checkout-overview.page';
+import { InventoryPage } from '../../pages/app/inventory.page';
+import { LoginPage } from '../../pages/app/login.page';
 
 /**
  * Framework fixtures for page objects.
  * Add new page object types here as you create them.
  */
 export type FrameworkFixtures = {
-    /** Main application page object */
-    appPage: AppPage;
+    /** Login page */
+    loginPage: LoginPage;
+    /** Inventory ("Products") page */
+    inventoryPage: InventoryPage;
+    /** "Your Cart" page */
+    cartPage: CartPage;
+    /** Checkout step one: "Your Information" */
+    checkoutInformationPage: CheckoutInformationPage;
+    /** Checkout step two: "Overview" */
+    checkoutOverviewPage: CheckoutOverviewPage;
+    /** Checkout confirmation page */
+    checkoutCompletePage: CheckoutCompletePage;
     /** Clears cookies, permissions and the app's web storage so the test starts signed out */
     resetStorageState: () => Promise<void>;
 };
 
 /**
  * Extended test with page object fixtures.
- * Import this in your test files to access page objects.
- *
- * @example
- * ```ts
- * import { test, expect } from '../fixtures/pom/test-options';
- *
- * test('example test', async ({ appPage }) => {
- *   await appPage.openHomePage();
- *   await expect(appPage.appTitle).toBeVisible();
- * });
- * ```
+ * Import `test` from `fixtures/pom/test-options.ts` in spec files, not from here.
  */
 export const test = base.extend<FrameworkFixtures>({
-    appPage: async ({ page }, use) => {
-        await use(new AppPage(page));
+    loginPage: async ({ page }, use) => {
+        await use(new LoginPage(page));
+    },
+
+    inventoryPage: async ({ page }, use) => {
+        await use(new InventoryPage(page));
+    },
+
+    cartPage: async ({ page }, use) => {
+        await use(new CartPage(page));
+    },
+
+    checkoutInformationPage: async ({ page }, use) => {
+        await use(new CheckoutInformationPage(page));
+    },
+
+    checkoutOverviewPage: async ({ page }, use) => {
+        await use(new CheckoutOverviewPage(page));
+    },
+
+    checkoutCompletePage: async ({ page }, use) => {
+        await use(new CheckoutCompletePage(page));
     },
 
     resetStorageState: async ({ context, page }, use) => {
@@ -36,7 +61,7 @@ export const test = base.extend<FrameworkFixtures>({
             await context.clearCookies();
             await context.clearPermissions();
             // Web storage is per origin: the page must be on the app before
-            // localStorage (where this app keeps its token) can be cleared.
+            // localStorage (where this app keeps the cart) can be cleared.
             await page.goto(process.env.APP_URL!, {
                 waitUntil: 'domcontentloaded',
             });
