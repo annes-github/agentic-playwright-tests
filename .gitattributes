@@ -7,3 +7,10 @@
 # Windows batch files are the one exception: cmd.exe expects CRLF.
 *.cmd text eol=crlf
 *.bat text eol=crlf
+
+# Scaffold tooling (AI skills, rule-check hooks, maintenance scripts) is
+# third-party code: keep it out of GitHub's language statistics so the repo
+# is labelled by its test suite (TypeScript), not by the tooling (Python).
+.claude/** linguist-vendored
+.agents/** linguist-vendored
+scripts/** linguist-vendored
